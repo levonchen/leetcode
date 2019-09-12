@@ -5,72 +5,48 @@ using namespace std;
 
 //#include "ValidSudoku_36.cpp"
 
-extern int getUnitSequence(int r, int c);
+//extern int getUnitSequence(int r, int c);
 extern bool isValidSudoku_v2(vector<vector<char>>& board);
 
-//int getUnitSequence(int r, int c)
-//{
-//	if (r < 3)
-//	{
-//		if (c < 3)
-//		{
-//			return 0;
-//		}
-//
-//		if (c >= 3 && c <= 5)
-//		{
-//			return 1;
-//		}
-//		return 2;
-//	}
-//
-//	if (r >= 3 && r <= 5)
-//	{
-//		if (c < 3)
-//		{
-//			return 3;
-//		}
-//		if (c >= 3 && c <= 5)
-//		{
-//			return 4;
-//		}
-//		return 5;
-//	}
-//
-//	if (c < 3)
-//	{
-//		return 6;
-//	}
-//	if (c >= 3 && c <= 5)
-//	{
-//		return 7;
-//	}
-//	return 8;
-//
-//}
+int rows[9];
+int cols[9];
+int cubes[9];
 
-bool isValid(vector<vector<char>>& board, int row, int column, char value)
+int getCube(int row, int col)
 {
+	return (row / 3) * 3 + col / 3;
+}
 
-	int unit = getUnitSequence(row, column);
+void addNumber(int row, int col, int cube, vector<vector<char>>& board, int number)
+{
+	char v = (char)('0' + number);
+	int num = 1 << number;
 
-	for (int index = 0; index < 9; index++)
-	{
-		if (board[row][index] == value)
-			return false;
+	rows[row] |= num;
+	cols[col] |= num;
+	cubes[cube] |= num;
 
-		if (board[index][column] == value)
-			return false;
+	board[row][col] = v;
+}
 
-		int uR = 3 * (unit / 3) + index / 3;
-		int uC = 3 * (unit % 3) + index % 3;
+void removeNumber(int row, int col, int cube, vector<vector<char>>& board, int number)
+{
+	int num = 1 << number;
+	rows[row] ^= num;
+	cols[col] ^= num;
+	cubes[cube] ^= num;
 
+	board[row][col] = '.';
+}
 
-		if (board[uR][uC] == value)
-			return false;
+bool isValid(vector<vector<char>>& board, int row, int column, int cube, int d)
+{
+	
+	int check = ((rows[row] >> d) & 1) + ((cols[column] >> d) & 1) + ((cubes[cube] >> d) & 1);
+	if (check == 0) {		
+		return true;
 	}
-
-	return true;
+	return false;
 }
 
 bool solve(vector<vector<char>>& board)
@@ -84,11 +60,14 @@ bool solve(vector<vector<char>>& board)
 				continue;
 			}
 
-			for (char start = '1'; start <= '9'; start++)
+			int cube = getCube(i, j);
+
+			for (int start = 1; start <= 9; start++)
 			{
-				if (isValid(board, i, j, start))
-				{
-					board[i][j] = start;
+				if (isValid(board, i, j, cube,start))
+				{					
+
+					addNumber(i, j, cube, board, start);
 
 					if (solve(board))
 					{
@@ -96,7 +75,7 @@ bool solve(vector<vector<char>>& board)
 					}
 					else
 					{
-						board[i][j] = '.';
+						removeNumber(i, j, cube, board, start);
 					}
 				}
 			}
@@ -112,6 +91,20 @@ bool solve(vector<vector<char>>& board)
 
 
 void solveSudoku(vector<vector<char>>& board) {
+
+	for (int r = 0; r < 9; ++r)
+	{
+		for (int c = 0; c < 9; ++c)
+		{
+			if (board[r][c] != '.')
+			{
+				int cube = getCube(r, c);
+
+				int num = board[r][c] - '0';
+				addNumber(r, c, cube, board, num);
+			}
+		}
+	}
 
 	solve(board);
 }
