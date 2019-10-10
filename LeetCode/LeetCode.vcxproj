@@ -37,7 +37,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MergeKSortedLists_23.cpp" />
+    <ClCompile Include="RegExpMatching_10.cpp" />
     <ClCompile Include="SolveSudoku_37.cpp" />
+    <ClCompile Include="sum_15.cpp" />
     <ClCompile Include="ValidSudoku_36.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
