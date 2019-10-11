@@ -36,7 +36,9 @@
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="LastStoneWeight_1046.cpp" />
     <ClCompile Include="MergeKSortedLists_23.cpp" />
+    <ClCompile Include="NQueens_51.cpp" />
     <ClCompile Include="RegExpMatching_10.cpp" />
     <ClCompile Include="SolveSudoku_37.cpp" />
     <ClCompile Include="sum_15.cpp" />
