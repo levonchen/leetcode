@@ -36,7 +36,9 @@
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CL_2.cpp" />
     <ClCompile Include="LastStoneWeight_1046.cpp" />
+    <ClCompile Include="maximuSubarray_53.cpp" />
     <ClCompile Include="MergeKSortedLists_23.cpp" />
     <ClCompile Include="NQueens_51.cpp" />
     <ClCompile Include="RegExpMatching_10.cpp" />
@@ -49,6 +51,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="wildcard_matching_44.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
